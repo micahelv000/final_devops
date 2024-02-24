@@ -1,0 +1,49 @@
+sudo apt update
+
+cd /home/devops/Desktop/deploy
+mdkir deploy
+sudo chmod -R 777 /deploy
+============
+sudo docker network create network1
+
+
+===========
+sudo docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v /home/devops/Desktop/deploy:/var/jenkins_home/ jenkins/jenkins
+
+sudo docker run -d -p 8081:8080 --name tomcat  -v /home/devops/Desktop/deploy/:/usr/local/tomcat/webapps tomcat
+
+sudo docker network connect network1 tomcat
+sudo docker network connect network1 jenkins
+=========
+//#TO GET THE INITIAL PASSWORD 									sudo docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+
+//#TO FIX 404 IN TOMCAT 
+sudo docker exec -it tomcat /bin/bash
+cd webapps.dist/
+cp -R * ../webapps
+exit
+
+sudo chmod -R 777 /home/devops/Desktop/deploy/ROOT
+mkdir /home/devops/Desktop/deploy/ROOT/MyWebSite
+
+===========
+//#  
+apt update
+apt update nano
+
+==========
+//# jenkins exeshell
+//# cp /var/jenkins_home/workspace/task1/* /var/jenkins_home/ROOT/MyWebSite
+
+///////////////sdie note http://172.17.0.3:8080/MyWebSite/test.jsp === http://localhost:8081/MyWebSite/test.jsp
+//##
+curl -sSf "http://172.17.0.3:8080/MyWebSite/test.jsp" > /dev/null
+if  [ $? -eq 0 ]; then
+	echo "available"
+else
+	echo "not available"
+    exit 1
+fi
+
+//###
+* * * * *
