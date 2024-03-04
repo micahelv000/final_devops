@@ -40,7 +40,7 @@
     %>
     
     <header>
-        <h1>LIFE 1 </h1>
+        <h1>LIFE</h1>
         <h3>Live Intensly Fulfill Emotions</h3>
     </header>
 
